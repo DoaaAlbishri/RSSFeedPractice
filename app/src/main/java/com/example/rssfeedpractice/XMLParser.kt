@@ -6,7 +6,7 @@ import java.io.InputStream
 
 
 data class RecentQuestions(val title:String? , val summary:String?){
-    override fun toString(): String = title!!
+    override fun toString(): String = "title: " +title!! +" " +"summary: "+ summary!!
 }
 
 class XMLParser {

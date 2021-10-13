@@ -5,17 +5,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import java.net.HttpURLConnection
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
-    lateinit var listView : ListView
+    lateinit var myRv : RecyclerView
     var recentQuestions = mutableListOf<RecentQuestions>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listView = findViewById(R.id.listView)
+        myRv = findViewById(R.id.recyclerView)
         FetchRecentQuestions().execute()
+        //test toString method
+        //val ob = RecentQuestions("hi","greeting")
+        //println(ob.toString())
     }
 
     private inner class FetchRecentQuestions: AsyncTask<Void,Void,MutableList<RecentQuestions>>(){
@@ -31,8 +36,10 @@ class MainActivity : AppCompatActivity() {
 
         override fun onPostExecute(result: MutableList<RecentQuestions>?) {
             super.onPostExecute(result)
-            val adapter = ArrayAdapter(this@MainActivity,android.R.layout.simple_list_item_1,recentQuestions)
-            listView.adapter=adapter
+            myRv.adapter = RecyclerViewAdapter(recentQuestions)
+            myRv.layoutManager = LinearLayoutManager(this@MainActivity)
         }
+
+
     }
 }
